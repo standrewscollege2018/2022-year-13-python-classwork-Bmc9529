@@ -10,6 +10,9 @@ class Enemy:
         #set initial health value use _ to indicate private object
         self._health = health
 
+        #append new enemy into the enemy list
+        enemy_list.append(self)
+
         #scare the world with evil laugh
         print(f"mwa ga ga ga, {self._name} has been born")
 
@@ -29,21 +32,17 @@ class Enemy:
         else:
             print("Ouch")
 
-# create a new enemy object
-enemy1 = Enemy("Ethan Adams", 1000)
-enemy2 = Enemy("Ryan stewart", 0.01)
+def display_enemies():
+    '''This function loops through enemy_list and displays their name and health'''
+    for e in enemy_list:
+        print(f"{e.get_name()} has {e.get_health()} health")
 
-attacking = True
-print(f"{enemy1.get_name()} has {enemy1.get_health()} health left")
-print(f"{enemy2.get_name()} has {enemy2.get_health()} health left")
-while attacking == True:
-    target = input("\nWho do you want to attack:\n")
-    attack = float(input("\nHow much do you want to attack:\n"))
-    if target == "Ethan Adams":
-        enemy1.attacked(attack)
-    elif target == "Ryan Stewart":
-        enemy2.attacked(attack)
-    else:
-        print("\nNo one attacked")
-    print(f"{enemy1.get_name()} has {enemy1.get_health()} health left")
-    print(f"{enemy2.get_name()} has {enemy2.get_health()} health left")
+#create a list to store all enemy objects
+enemy_list = []
+
+
+# create a new enemy object
+Enemy("Ethan Adams", 1000)
+Enemy("Ryan stewart", 0.01)
+
+display_enemies()
