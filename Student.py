@@ -46,7 +46,7 @@ def display_students():
         print(f"Name: {student.get_name()}")
     print("")
 
-def display_student(name):
+def search_student(name):
     '''This function loops through enemy_list and displays their name and health'''
     for student in student_list:
         if name in student.get_name():
@@ -71,15 +71,60 @@ def generate_students():
             i=3
             while i in range(3,8):
                 classes.append(line[i])
+                if line[i] not in class_list:
+                    class_list.append(line[i])
                 i += 1
                 #create a new student object
             Student(line[0],int(line[1]),line[2],True,classes)
 
+def add_student():
+    '''This function enables us to add a new student'''
+    name = input("\nName:\n")
+    age = int(input("Age:\n"))
+    phone_number = input("PhoneNumber\n")
+    input_classes=True
+    classes = []
+    print("Input the class names below, type quit to exit:\n")
+    while input_classes == True: 
+        cl = input("Class: ")
+        if cl == "quit":
+            input_classes = False
+        else:
+            classes.append(cl)
+            if cl not in class_list:
+                class_list.append(cl)
+    Student(name, age, phone_number, True, classes)
+    display_student(name)
+    print("Was added")
+
+def display_classes():
+    cl_index = 0
+    for classes in class_list:
+        print(f"{cl_index + 1}: {classes}")
+        cl_index += 1
+
+def search_classes():
+    display_classes()
+    cl_index = int(input("\nEnter class:\n"))-1
+    amount = 0
+    for student in student_list:
+        if class_list[cl_index] in student.get_classes:
+            print("="*30)
+            print(f"Name: {student.get_name()}\nAge: {student.get_age()}\nPhone Number: {student.get_phonenumber()}\nEnrollment status: {student.get_enrollment()}\nClasses: {student.get_classes()}")
+            print("="*30)
+            print("")
+            amount +=1
+    print(f"There are {amount} students in class")
+
+       
 student_list = []
-
+class_list = []
 generate_students()
-display_students()
 
-name = input("Enter name of student:\n")
-display_student(name)
+search_classes()
 
+#display_students()
+#name = input("Enter name of student:\n")
+#search_student(name)
+
+#add_student()
