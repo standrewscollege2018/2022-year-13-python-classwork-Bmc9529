@@ -20,6 +20,10 @@ class Student:
             self._classes = "Student has no classes"
         student_list.append(self)
 
+    def __del__(self):
+        '''This function is automatically called when the object is deleted'''
+        print("Student record has permanently been deleted")
+
     def get_name(self):
         ''' THis function returns the name of the student object'''
         return self._name
@@ -94,7 +98,7 @@ def add_student():
             if cl not in class_list:
                 class_list.append(cl)
     Student(name, age, phone_number, True, classes)
-    display_student(name)
+    search_student(name)
     print("Was added")
 
 def display_classes():
@@ -108,13 +112,16 @@ def search_classes():
     cl_index = int(input("\nEnter class:\n"))-1
     amount = 0
     for student in student_list:
-        if class_list[cl_index] in student.get_classes:
+        if class_list[cl_index] in student.get_classes():
             print("="*30)
             print(f"Name: {student.get_name()}\nAge: {student.get_age()}\nPhone Number: {student.get_phonenumber()}\nEnrollment status: {student.get_enrollment()}\nClasses: {student.get_classes()}")
             print("="*30)
             print("")
             amount +=1
     print(f"There are {amount} students in class")
+
+def delete_student():
+    pass
 
        
 student_list = []
@@ -123,8 +130,10 @@ generate_students()
 
 search_classes()
 
-#display_students()
-#name = input("Enter name of student:\n")
-#search_student(name)
+display_students()
+name = input("enter name of student:\n")
+search_student(name)
 
-#add_student()
+add_student()
+
+search_classes()
