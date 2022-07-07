@@ -33,12 +33,27 @@ def generate_items():
             
             Item(line[0], int(line[1]))
 
+def delete_item():
+    for num in listbox.curselection():
+        if messagebox.askyesno("Confirm Delete", f"Are you sure you want to delete {all_items[num].get_name()}"):
+           del all_items[num]
+    #delete all items from listbox then repopulate
+    listbox.delete(0, END)
+    listbox_fill()
+
+def add_item():
+    print("yes")
+
 def print_selection():
     '''print out selected items'''
     for num in listbox.curselection():
-        something = True
-        while something == True:
-            messagebox.showinfo(f"{all_items[num].get_name()}", f"{all_items[num].get_name()} costs ${all_items[num].get_value()}")
+        messagebox.showwarning(f"{all_items[num].get_name()}", f"{all_items[num].get_name()} costs ${all_items[num].get_value()}")
+
+def listbox_fill():
+    #Populate listbox with names of items
+    for i in all_items:
+        listbox.insert(END, i.get_name())
+            
         
 
     
@@ -60,21 +75,37 @@ root.title("Popups demo")
 root.geometry("800x500")
 
 listbox = Listbox(root, selectmode=SINGLE)
-listbox.grid(row=0)
-
-#Populate listbox with names of items
-for i in all_items:
-    listbox.insert(END, i.get_name())
+listbox.grid(row=0, rowspan=3)
+listbox_fill()
 
 #button to enter selection
 select_btn = Button(root, text="selection", command=print_selection)
-select_btn.grid(row=1)
-
+select_btn.grid(row=3)
+ 
 details = StringVar()
 details_lbl = Label(root, textvariable=details)
-details_lbl.grid(row=1, column=1)
+details_lbl.grid(row=4, column=1)
 
+#Button for deleting selected item
+delete_btn = Button(root, text="Delete", command=delete_item)
+delete_btn.grid(row=3, column=2)
 
+#entry field labling
+heading_lbl = Label(root, text="Add New Item")
+heading_lbl.grid(row=0, column=3)
+
+name_lbl = Label(root, text="Name")
+name_lbl.grid(row=1, column=3)
+name_input = Entry(root)
+name_input.grid(row=1, column=4)
+
+value_lbl = Label(root,text="Value (in $)")
+value_lbl.grid(row=2, column=3)
+value_input = Entry(root)
+value_input.grid(row=2, column=4)
+
+add_btn = Button(root, text="Add", command=add_item)
+add_btn.grid(row=3, column=4)
 
 
 
